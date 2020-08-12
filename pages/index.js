@@ -98,7 +98,7 @@ export default function Home({ data }) {
             }
           }
         }}>
-          <h1 className="title">Rick and Morty Wiki</h1>
+          <h1 className="title">Rick and Morty hola</h1>
         </motion.div>
 
         <p className="description">This is a sample app of Rick and Morty</p>
