@@ -1,7 +1,8 @@
 import Head from "next/head";
+import Link from "next/link";
+import DefaultErrorPage from "next/error";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
 
 const defaultEndpoint = `https://rickandmortyapi.com/api/character`;
 
@@ -61,15 +62,20 @@ export default function Home({ data }) {
     });
   }
 
-  function handleOnSubmitSearch(e) {
+  async function handleOnSubmitSearch(e){
     e.preventDefault();
-
     const { currentTarget = {} } = e;
     const fields = Array.from(currentTarget?.elements);
     const fieldQuery = fields.find((field) => field.name === "query");
 
     const value = fieldQuery.value || "";
     const point = `https://rickandmortyapi.com/api/character/?name=${value}`;
+
+    const res = await fetch(point);
+    const data = await res.json();
+    
+    if(data.error) return(<DefaultErrorPage statusCode={404}/>);
+    // if(a.status === 404) return(<DefaultErrorPage statusCode={404}/>);
 
     updatePage({
       current: point,
